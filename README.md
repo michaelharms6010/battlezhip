@@ -1,4 +1,4 @@
-# Battlezhip
+# Battlezhip / Zgame lounge
 
 ## User flow
 
