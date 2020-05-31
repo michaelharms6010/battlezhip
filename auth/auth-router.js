@@ -9,22 +9,31 @@ const Users = require('./auth-model');
 router.post('/register',  (req, res) => {
   let user = req.body;
   const errors = []
-  user.password = bcrypt.hashSync(user.password,10);
+  
   if (user.zaddr && !zaddrRegex.test(user.zaddr)) {
-    
+    errors.push("your zaddr is invalid.")
+  } if (user.password && user.password.length < 8) {
+    errors.push("your password must be at least 8 characters long.")
   }
-  Users.add(user)
+  
+  if (errors.length) {
+    res.status(500).json({errors})
+  } else {
+    user.password = bcrypt.hashSync(user.password,10);
+    Users.add(user)
     .then(saved => {
-      const newUser = saved[0]
-    delete newUser.password;
-    const token = generateToken(newUser);
-     res.status(201).json({user: newUser, token: token})
+      const id = saved[0]
+      user.id = id
+      delete user.password;
+      const token = generateToken(user);
+      res.status(201).json({user: newUser, token: token})
      
     })
     .catch(err => {
       res.status(500).json(err)
       console.log(err, 'err')
     })
+  }
 });
 
 router.post('/login', (req, res) => {
@@ -54,7 +63,7 @@ function generateToken(user) {
     
   };
   const options = {
-    expiresIn: "42069d"
+    expiresIn: "1d"
   };
   return jwt.sign(payload, secret.jwtSecret, options);
 }
