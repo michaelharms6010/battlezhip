@@ -6,6 +6,8 @@ const morgan = require("morgan");
 const userRouter = require("./users/users-router")
 const authRouter = require("./auth/auth-router")
 
+const listTxns = require("./helpers/listTxns")
+listTxns();
 const server = express();
 
 server.use(helmet());
@@ -15,6 +17,8 @@ server.use(morgan("dev"));
 
 server.use("/auth", authRouter)
 server.use("/users", userRouter)
+
+
 
 server.get("/", (req,res) => {
     res.json({message: "Server is up and running"})
