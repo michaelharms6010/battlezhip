@@ -5,6 +5,7 @@ const morgan = require("morgan");
 
 const userRouter = require("./users/users-router")
 const authRouter = require("./auth/auth-router")
+const gamesRouter = require("./games/games-router")
 
 const listTxns = require("./helpers/listTxns")
 listTxns();
@@ -17,6 +18,7 @@ server.use(morgan("dev"));
 
 server.use("/auth", authRouter)
 server.use("/users", userRouter)
+server.use("/games", gamesRouter)
 
 
 
