@@ -7,13 +7,13 @@ exports.up = function(knex) {
         .references("id")
         .inTable("users")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE")
+        .onUpdate("CASCADE");
 
         tbl.integer("p2_id", 64)
         .references("id")
         .inTable("users")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE")
+        .onUpdate("CASCADE");
 
         tbl.string("turns");
     });
