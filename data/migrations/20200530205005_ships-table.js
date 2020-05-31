@@ -16,8 +16,8 @@ exports.up = function(knex) {
         .onUpdate("CASCADE");
         
         tbl.string("name");
-        tbl.string("start_coord");
-        tbl.string("end_coord");
+        tbl.string("start_coord", 32);
+        tbl.string("end_coord", 32);
     })
 };
 
